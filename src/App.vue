@@ -50,6 +50,10 @@ export default {
 
 <style scope="scoped">
 .header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: #444 !important;
 }
 
