@@ -113,6 +113,7 @@ export default {
 <style>
 .search-area {
   position: relative;
+  margin-top: 45px;
 }
 .search-suggestion {
   overflow: auto;
