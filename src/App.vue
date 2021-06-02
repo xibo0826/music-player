@@ -1,32 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <van-nav-bar title="Music player" class="header" />
+    <router-view></router-view>
+    <van-tabbar v-model="currentTab" class="tabbar" active-color="red" inactive-color="skyblue" @change="changeTab">
+      <van-tabbar-item name="home" replace to="/home" icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item name="search" replace to="/search" icon="search">搜索</van-tabbar-item>
+      <!-- <van-tabbar-item name="play" replace to="/play" icon="play">播放</van-tabbar-item> -->
+    </van-tabbar>
+    <van-popup v-model="showPlayer" class="playing-full"  position="bottom" :closeable="true">
+      <player>
+      </player>
+    </van-popup>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import player from "./components/Play.vue";
+export default {
+  components: {
+    player,
+  },
+  data() {
+    return {
+      currentTab: "home",
+    };
+  },
+  computed: {
+    showPlayer: {
+      get() {
+        return this.$store.state.showPlayer;
+      },
+      set(flg) {
+        this.$store.commit("togglePlayer", flg);
+      }
+    },
+    isPlaying() {
+      return this.$store.state.isPlaying;
+    }
+  },
+  methods: {
+    changeTab(tab) {
+      console.log(tab);
+      this.currentTab = tab;
+    },
+  },
+};
+</script>
+
+
+<style scope="scoped">
+.header {
+  background: #444 !important;
 }
 
-#nav {
-  padding: 30px;
+.van-nav-bar__title {
+  color: skyblue !important;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.van-tabbar-item--active {
+  background: #444 !important;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.tabbar {
+  background: #444 !important;
 }
+
+.playing-full {
+  height: 100%;
+}
+
 </style>
