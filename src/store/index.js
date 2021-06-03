@@ -8,17 +8,13 @@ export default new Vuex.Store({
     playList: [],
     playingSong: {},
     showPlayer: false,
-    isPlaying: false
+    isPlaying: false,
+
+    showPlayList: false,
   },
   mutations: {
     addPlayList(state, song) {
       state.playList.push({
-        id: song.id,
-        url: song.url,
-      })
-    },
-    playNow(state, song) {
-      state.playList.unshift({
         id: song.id,
         url: song.url,
       })
@@ -29,16 +25,25 @@ export default new Vuex.Store({
     changeSongUrl(state, song) {
       let target = state.playList.filter(p => p.id === song.id)
       if (target.length > 0) {
-        target[0].url = song.url
+        Vue.set(target[0], "url", song.url)
       }
     },
-    setPlayingSongId(state, song) {
+    setPlayingSong(state, song) {
       Vue.set(state.playingSong, "id", song.id)
-      Vue.set(state.playingSong, "url", song.url)
-      Vue.set(state.playingSong, "pic", song.pic)
+
+      if (song.url) {
+        Vue.set(state.playingSong, "url", song.url)
+      }
+
+      if (song.pic) {
+        Vue.set(state.playingSong, "pic", song.pic)
+      }
     },
     togglePlayer(state, flg) {
       state.showPlayer = flg;
+    },
+    togglePlayList(state) {
+      state.showPlayList = !state.showPlayList;
     },
     setPlayingFlg(state, flg) {
       state.isPlaying = flg;

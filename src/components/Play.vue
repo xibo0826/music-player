@@ -1,25 +1,20 @@
 <template>
   <div class="container">
     <section class="pic-area">
+      123
       <img src="" alt="">
     </section>
-    <section class="lyrics-area"></section>
+    <section class="lyrics-area">123</section>
     <section class="player-area">
-      <audio :src="playerURL" controls autoplay @error="playError"></audio>
-      <vue-plyr>
-        <audio controls crossorigin playsinline>
-          <source :src="playerURL" type="audio/mp3" />
-        </audio>
-      </vue-plyr>
+      <player></player>
     </section>
   </div>
 </template>
 <script>
-import VuePlyr from "vue-plyr";
-import "vue-plyr/dist/vue-plyr.css";
+import player from './Player.vue'
 export default {
   components: {
-    VuePlyr,
+    player
   },
   props: {
     isPlayFlg: {
@@ -30,7 +25,6 @@ export default {
   data() {
     return {
       currentIndex: 0,
-      playerURL: "",
     };
   },
   computed: {
@@ -52,13 +46,13 @@ export default {
       }
       const res = await this.$http.get(`/song/url?id=${id}`);
       if (res.data.data.length > 0) {
+        console.log(res);
         // 歌曲获取成功
-        this.$store.commit("changeSongUrl", {
+        this.$store.commit("setPlayingSong", {
           id,
           url: res.data.data[0].url,
         });
-        // 设置播放器的url
-        this.playerURL = res.data.data[0].url;
+        this.$store.commit("setPlayingFlg", true);
       } else {
         this.$message({ type: "danger", message: "播放失败" });
       }
@@ -70,5 +64,26 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pic-area {
+  height: 200px;
+  background: skyblue;
+}
+
+.lyrics-area {
+  flex-grow: 1;
+}
+
+
+.player-area {
+  width: 100%;
+  height: 160px;
+}
 </style>

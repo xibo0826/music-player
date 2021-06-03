@@ -18,7 +18,7 @@
       <van-list>
         <van-cell v-for="song in searchResults" :key="song.id" :title="song.name">
           <template #right-icon>
-            <van-icon name="play" class="play-icon" @click="playSong(song.id)" />
+            <van-icon name="play" class="play-icon" @click="playSong(song.id, song.artists[0].img1v1Url)" />
             <van-icon name="plus" class="play-icon" @click="addPlayList(song.id)" />
           </template>
         </van-cell>
@@ -97,10 +97,10 @@ export default {
     },
 
     // 播放歌曲
-    playSong(id) {
+    playSong(id, pic) {
       this.$store.commit("togglePlayer", true);
       this.$store.commit("setPlayingFlg", true);
-      this.$store.commit("setPlayingSongId", { id });
+      this.$store.commit("setPlayingSong", { id, pic });
     },
 
     // 加入播放列表
@@ -113,7 +113,11 @@ export default {
 <style>
 .search-area {
   position: relative;
+<<<<<<< HEAD
   margin-top: 45px;
+=======
+  margin-top: 40px;
+>>>>>>> 498bcae28f70546e252a9120876eb15ea8594dab
 }
 .search-suggestion {
   overflow: auto;
