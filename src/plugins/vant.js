@@ -14,6 +14,7 @@ import { Notify } from 'vant';
 import { Search } from 'vant';
 import { Col, Row } from 'vant';
 import { Popup } from 'vant';
+import { Slider } from 'vant';
 
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -30,6 +31,8 @@ Vue.use(Search);
 Vue.use(Col);
 Vue.use(Row);
 Vue.use(Popup);
+Vue.use(Slider);
+
 
 
 Vue.prototype.$message = Notify

@@ -11,6 +11,10 @@
       <player>
       </player>
     </van-popup>
+
+    <van-popup v-model="showPlayList" class="play-list"  position="right" :closeable="true">
+      播放列表
+    </van-popup>
   </div>
 </template>
 
@@ -32,6 +36,14 @@ export default {
       },
       set(flg) {
         this.$store.commit("togglePlayer", flg);
+      }
+    },
+    showPlayList: {
+      get() {
+        return this.$store.state.showPlayList;
+      },
+      set(flg) {
+        this.$store.commit("togglePlayList");
       }
     },
     isPlaying() {
@@ -71,6 +83,11 @@ export default {
 
 .playing-full {
   height: 100%;
+}
+
+.play-list {
+  height: 100%;
+  width: 60%;
 }
 
 </style>
