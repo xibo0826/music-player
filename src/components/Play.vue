@@ -6,11 +6,21 @@
     <section class="lyrics-area"></section>
     <section class="player-area">
       <audio :src="playerURL" controls autoplay @error="playError"></audio>
+      <vue-plyr>
+        <audio controls crossorigin playsinline>
+          <source :src="playerURL" type="audio/mp3" />
+        </audio>
+      </vue-plyr>
     </section>
   </div>
 </template>
 <script>
+import VuePlyr from "vue-plyr";
+import "vue-plyr/dist/vue-plyr.css";
 export default {
+  components: {
+    VuePlyr,
+  },
   props: {
     isPlayFlg: {
       type: Boolean,
@@ -20,7 +30,7 @@ export default {
   data() {
     return {
       currentIndex: 0,
-      playerURL: '',
+      playerURL: "",
     };
   },
   computed: {
@@ -31,7 +41,7 @@ export default {
   watch: {
     playingSongId(val, old) {
       if (old !== val) {
-        this.playSong(val)
+        this.playSong(val);
       }
     },
   },
