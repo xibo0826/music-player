@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <van-swipe class="swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item v-for="item in bannerData" :key="item.id">
+      <van-swipe-item v-for="item in bannerData" :key="item.id" @click="blumeClick(item.id)">
         <img :src="item.artist.picUrl" alt="">
       </van-swipe-item>
     </van-swipe>
@@ -12,6 +12,10 @@
           <template #tags>
             <van-tag class="song-tag" v-for="tag in item.tags" :key="tag" type="warning">{{ tag }}</van-tag>
           </template>
+          <template #footer>
+            <van-icon name="play" class="play-icon" size="20" @click="playSong(item.id, item.name, item.coverImgUrl)" style="margin-right: 10px;" />
+            <van-icon name="plus" class="play-icon" size="20" @click="addPlayList(item.id, item.name, item.coverImgUrl)" />
+        </template>
         </van-card>
       </van-list>
     </section>
@@ -27,8 +31,10 @@
     <section class="hot">
       <van-list finished-text="没有更多了">
         <van-card class="song-card" v-for="item in suggestSongs" :key="item.id" tag="hot" :title="item.name" :desc="item.copywriter" :thumb="item.picUrl">
-          <template #tags>
-          </template>
+          <template #footer>
+            <van-icon name="play" class="play-icon" size="20" @click="playSong(item.id, item.name, item.coverImgUrl)" style="margin-right: 10px;" />
+            <van-icon name="plus" class="play-icon" size="20" @click="addPlayList(item.id, item.name, item.coverImgUrl)" />
+        </template>
         </van-card>
       </van-list>
     </section>
@@ -114,6 +120,24 @@ export default {
       console.log(result.data.albums);
       this.newAlbums = result.data.albums;
     },
+
+    // 播放歌曲
+    playSong(id, name, pic) {
+      this.$store.commit("togglePlayer", true);
+      this.$store.commit("setPlayingFlg", true);
+      this.$store.commit("setPlayingSong", { id, name, pic });
+    },
+
+    // 加入播放列表
+    addPlayList(id, name, pic) {
+      this.$store.commit("addPlayList", { id, name, pic });
+      this.$message({ type: "success", message: "添加播放列表成功!" });
+    },
+
+    // 打开专辑页面
+    blumeClick(id) {
+      this.$router.push(`/albums/${id}`);
+    }
   },
 };
 </script>

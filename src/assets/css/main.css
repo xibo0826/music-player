@@ -1,0 +1,5 @@
+.playing-small {
+    height: 80px;
+    bottom: 48px;
+    transition: height .1s linear !important;
+  }

@@ -8,7 +8,7 @@
     </div>
 
     <div class="hot-word-area">
-      <van-row>
+      <van-row type="flex" justify="space-around">
         <van-col span="6" v-for="hotword in hotSearchWords" :key="hotword.first">
           <van-tag class="hot-word-tag" @click="tagClick(hotword.first)" type="primary" plain> {{hotword.first}} </van-tag>
         </van-col>
@@ -19,7 +19,7 @@
         <van-cell v-for="song in searchResults" :key="song.id" :title="song.name">
           <template #right-icon>
             <van-icon name="play" class="play-icon" @click="playSong(song.id, song.artists[0].img1v1Url)" />
-            <van-icon name="plus" class="play-icon" @click="addPlayList(song.id)" />
+            <van-icon name="plus" class="play-icon" @click="addPlayList(song.id, song.name)" />
           </template>
         </van-cell>
         <!-- <van-card class="song-card" v-for="song in searchResults" :key="song.id" :title="song.name" :thumb="song.artists[0].img1v1Url">
@@ -85,8 +85,8 @@ export default {
           keywords: this.searchWord,
         },
       });
-      console.log(result);
       this.searchResults = result.data.result.songs;
+      console.log("搜索结果");
       console.log(this.searchResults);
     },
 
@@ -104,8 +104,9 @@ export default {
     },
 
     // 加入播放列表
-    addPlayList(id) {
-      this.$store.commit("addPlayList", { id });
+    addPlayList(id, name, pic) {
+      this.$store.commit("addPlayList", { id, name, pic });
+      this.$message({ type: "success", message: "添加播放列表成功!" });
     },
   },
 };
@@ -113,11 +114,6 @@ export default {
 <style>
 .search-area {
   position: relative;
-<<<<<<< HEAD
-  margin-top: 45px;
-=======
-  margin-top: 40px;
->>>>>>> 498bcae28f70546e252a9120876eb15ea8594dab
 }
 .search-suggestion {
   overflow: auto;
@@ -127,6 +123,7 @@ export default {
   width: 100%;
   height: 300px;
   display: none;
+  background: #aaa;
   z-index: 999;
 }
 
@@ -138,6 +135,8 @@ export default {
   margin: 10px;
 }
 .hot-word-tag {
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 5px;
 }
 .play-icon {

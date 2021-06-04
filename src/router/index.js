@@ -14,9 +14,19 @@ const routes = [
     component: () => import('../views/Home.vue'),
   },
   {
+    path: '/category',
+    name: 'Category',
+    component: () => import('../views/Category.vue'),
+  },
+  {
     path: '/search',
     name: 'Search',
     component: () => import('../views/Search.vue'),
+  },
+  {
+    path: '/albums/:albumId',
+    name: 'Albums',
+    component: () => import('../views/Albums.vue'),
   },
 ]
 
